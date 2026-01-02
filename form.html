@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f9;
+    }
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    h2 { text-align: center; margin-bottom: 20px; }
+    label { display: block; margin-top: 10px; }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .buttons {
+      margin-top: 15px;
+      display: flex;
+      justify-content: space-between;
+    }
+    button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button[type="submit"] { background: #0078d7; color: #fff; }
+    button[type="reset"] { background: #ccc; }
+    #updateBtn { background: #28a745; color: #fff; }
+    #deleteBtn { background: #dc3545; color: #fff; }
+    .error { color: red; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Registration Form</h2>
+  <form id="regForm">
+    <label>First Name:
+      <input type="text" id="firstName" required>
+      <div class="error" id="firstNameError"></div>
+    </label>
+    <label>Last Name:
+      <input type="text" id="lastName" required>
+      <div class="error" id="lastNameError"></div>
+    </label>
+    <label>Date of Birth:
+      <input type="date" id="dob" required>
+    </label>
+    <label>Username:
+      <input type="text" id="username" required>
+    </label>
+    <label>Password:
+      <input type="password" id="password" required>
+    </label>
+    <label>Confirm Password:
+      <input type="password" id="confirmPassword" required>
+      <div class="error" id="passwordError"></div>
+    </label>
+    <label>Email:
+      <input type="email" id="email" required>
+    </label>
+    <label>Contact Number:
+      <input type="tel" id="contact" required>
+      <div class="error" id="contactError"></div>
+    </label>
+    <div class="buttons">
+      <button type="submit">Submit</button>
+      <button type="reset">Reset</button>
+      <button type="button" id="updateBtn">Update</button>
+      <button type="button" id="deleteBtn">Delete</button>
+    </div>
+  </form>
+</div>
+<script>
+  const form = document.getElementById("regForm");
+  const inputs = form.querySelectorAll("input");
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    let valid = true;
+
+    const nameRegex = /^[A-Za-z]+$/;
+    if (!nameRegex.test(firstName.value)) {
+      firstNameError.textContent = "Only letters allowed.";
+      valid = false;
+    } 
+    else firstNameError.textContent = "";
+
+    if (!nameRegex.test(lastName.value)) {
+      lastNameError.textContent = "Only letters allowed.";
+      valid = false;
+    } 
+    else lastNameError.textContent = "";
+
+    if (password.value !== confirmPassword.value) {
+      passwordError.textContent = "Passwords do not match.";
+      valid = false;
+    } 
+    else passwordError.textContent = "";
+
+    const contactRegex = /^[0-9]+$/;
+    if (!contactRegex.test(contact.value)) {
+      contactError.textContent = "Only numbers allowed.";
+      valid = false;
+    } 
+    else contactError.textContent = "";
+
+    if (valid) {
+      alert("Form submitted successfully!");
+      inputs.forEach(input => input.setAttribute("readonly", true));
+    }
+  });
+  // Update button
+  updateBtn.addEventListener("click", () => {
+    const confirmUpdate = confirm("Do you want to update the data in the form?");
+    if (confirmUpdate) {
+      inputs.forEach(input => input.removeAttribute("readonly"));
+      alert("You can now update the form.");
+    } 
+    else {
+      alert("Update cancelled.");
+    }
+  });
+  // Delete button
+  deleteBtn.addEventListener("click", () => {
+    if (confirm("Do you want to delete the data entered in the form?:")) {
+      form.reset();
+      inputs.forEach(input => input.removeAttribute("readonly"));
+      alert("Data deleted!");
+    }
+  });
+</script>
+</body>
+</html>
